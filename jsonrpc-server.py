@@ -29,9 +29,9 @@ class SAE(nn.Module):
 
 
 @dispatcher.add_method
-def search_engine(input_query):
-	print QAlive2.live(model, input_query, vocabulary, length_preprocessed, inverted_index, document_dictionary, norms, nod, list_of_document_tfidf_dicts)
-	return QAlive2.live(model, input_query, vocabulary, length_preprocessed, inverted_index, document_dictionary, norms, nod, list_of_document_tfidf_dicts)
+def search_engine(input_query, user_id):
+	print QAlive2.live(model, input_query, vocabulary, length_preprocessed, inverted_index, document_dictionary, norms, nod, list_of_document_tfidf_dicts, user_id)
+	return QAlive2.live(model, input_query, vocabulary, length_preprocessed, inverted_index, document_dictionary, norms, nod, list_of_document_tfidf_dicts, user_id)
 
 @dispatcher.add_method
 def autocomplete(input_query):

@@ -221,7 +221,7 @@ def get_inverted_index_query_terms(document_tuples, dictionary):
 
 	
 
-def live(model, input_query, vocabulary, length_preprocessed, inverted_index, document_dictionary, norms, nod, list_of_document_tfidf_dicts):
+def live(model, input_query, vocabulary, length_preprocessed, inverted_index, document_dictionary, norms, nod, list_of_document_tfidf_dicts, user_id):
 ################################ Live Code ######################################## 
 	ERROR_MESSAGE = ""
 	ANSWER = {"error":None, "main_ans":None, "Ans_1":None, "Ans_2":None, "Ans_3":None, "Ans_4":None, "Ans_5":None, "Ans_6":None, "Ans_7":None, "Ans_8":None, "Ans_9":None, "Ans_10":None }
@@ -246,25 +246,15 @@ def live(model, input_query, vocabulary, length_preprocessed, inverted_index, do
 		return ANSWER
 	_sae = torch.load('my_sae.pt')
 	user_id = 50
-	db = pymysql.connect("localhost", "qasys", "321@demo", "QA_system")
-	cursor = db.cursor()
 	fp = open('document-index.txt', 'rb')
 	doc_index = pickle.load(fp)
 	fp.close()
 	nb_documents = len(doc_index) 	
 	user_document_array = np.zeros(nb_documents)
 	doc_ids = doc_index.values()
-	userId = 5
-	try:
-		sql = "SELECT DOC_ID, CLICKS FROM user_clicks WHERE USER_ID = " + str(userId)
-		cursor.execute(sql)		
-		rows = cursor.fetchall()
-		for row in rows:
-			user_document_array[doc_ids.index(str(row[0]))] = row[1]
-	except Exception as e:
-		print e
-		print "Error in getting user viewed documents"
-		db.rollback()
+	rows = json.load(urllib.urlopen("127.0.0.1:8000/clicks/" + str(user_id) + '/');
+	for row in rows:
+		user_document_array[doc_ids.index(str(row[0]))] = row[1]
 	user_document_array = torch.FloatTensor(user_document_array)
   	reco_sys_scores = _sae.forward(Variable(user_document_array).unsqueeze(0))
 	db.close()
