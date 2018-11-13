@@ -244,15 +244,14 @@ def live(model, input_query, vocabulary, length_preprocessed, inverted_index, do
 	except ZeroDivisionError:
 		ANSWER['error'] = 'Please be more specific.'
 		return ANSWER
-	_sae = torch.load('my_sae.pt')
-	user_id = 50
+	_sae = torch.load('my_sae.pt')  
 	fp = open('document-index.txt', 'rb')
 	doc_index = pickle.load(fp)
 	fp.close()
 	nb_documents = len(doc_index) 	
 	user_document_array = np.zeros(nb_documents)
 	doc_ids = doc_index.values()
-	rows = json.load(urllib.urlopen("127.0.0.1:8000/clicks/" + str(user_id) + '/');
+	rows = json.load(urllib.urlopen("127.0.0.1:8000/clicks/" + str(user_id) + '/')['clicks'];
 	for row in rows:
 		user_document_array[doc_ids.index(str(row[0]))] = row[1]
 	user_document_array = torch.FloatTensor(user_document_array)
